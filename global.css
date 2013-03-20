@@ -1,0 +1,100 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+
+    font-family: Arial, sans-serif;
+}
+
+#outer {
+    display: table;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-align: center;
+    margin-top: -40px;
+    min-height: 420px;
+}
+
+#container {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+header {
+    display: block;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+header > h1 {
+    font-weight: normal;
+}
+
+header > h2 {
+    font-weight: normal;
+}
+
+#stats-outer {
+    margin-left auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#stats-inner {
+    display: inline-block;
+    font-size: 0;
+    box-shadow: 0px 2px 4px #d0d0d0;
+}
+
+.stat {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+    height: 100px;
+    border: 1px solid #cccccc;
+    border-right: 0;
+    vertical-align: middle;
+
+    text-align: center;
+    background-color: #F3F3F3;
+
+    font: 28pt Arial;
+    text-shadow: 0px 1px 0px white;
+}
+
+.stat > .key {
+    display: block;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+
+    color: #676767;
+    font-size: 10pt;
+}
+
+.stat > .value {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 2.3em;
+}
+
+.stat:last-of-type {
+    border-right: 1px solid #cccccc;
+}
+
+#players {
+    display: inline-block;
+    width: auto;
+    margin-top: 20px;
+    padding: 8px 16px;
+    background-color: #f3f3f3;
+    color: #676767;
+    font-size: 10pt;
+    text-shadow: 0px 1px 0px white;
+    border-width: 1px 1px;
+    border-color: #cccccc;
+    border-style: solid;
+    box-shadow: 0px 2px 4px #d0d0d0;
+}
