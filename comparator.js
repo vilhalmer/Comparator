@@ -6,15 +6,16 @@ var server
   , // Data //
     config
   , // Functions //
-    requestStatus, writeBits, sendRequest, payloadReader, generatePage
+    requestStatus, writeBits, payloadReader, generatePage, log
 ;
 
 // No error checking or validation on the configuration file at all, yet. Please play nice.
 config = JSON.parse(fs.readFileSync("comparator.conf")); // Cool.
 
 server = http.createServer(function(request, response) {
-    if (request.url === "/") {
-        console.log("Serving status page to " + response.connection.remoteAddress);
+    log(request.url, 9);
+    if (request.url === config["path"]) {
+        log("Serving status page to " + response.connection.remoteAddress, 1);
         response.writeHead(200, {"Content-Type": "text/html"});
         requestStatus(function(status) {
             if (status) {
@@ -33,7 +34,7 @@ server = http.createServer(function(request, response) {
     }
     else { // Handle a normal file. (Poorly, but handle it nonetheless.)
         if (fs.existsSync(process.cwd() + request.url) && fs.statSync(process.cwd() + request.url).isFile()) {
-            console.log("Serving request (" + request.url + ") to " + request.connection.remoteAddress);
+            log("Serving request (" + request.url + ") to " + request.connection.remoteAddress, 1);
             response.writeHead(200);
             fs.readFile(process.cwd() + request.url, 'utf8', function(err, data) {
                 response.write(data);
@@ -41,7 +42,7 @@ server = http.createServer(function(request, response) {
             });
         }
         else {
-            console.log("Invalid request (" + request.url + ") from " + request.connection.remoteAddress);
+            log("Invalid request (" + request.url + ") from " + request.connection.remoteAddress, 1);
             response.writeHead(404);
             response.end();
         }
@@ -52,13 +53,13 @@ server = http.createServer(function(request, response) {
 
 server.listen(config["port"], config["host"], null, function() {
     try {
-        console.log("Dropping root privileges...");
+        log("Dropping root privileges...", 0);
         process.setgid(config["group"]);
         process.setuid(config["user"]);
-        console.log("Success! Server running on " + config["host"] + ":" + config["port"] + " with uid " + process.getuid() + ".");
+        log("Success! Server running on " + config["host"] + ":" + config["port"] + " with uid " + process.getuid() + ".", 0);
     }
     catch (err) {
-        console.log("Failed. Cowardly refusing to run as root.");
+        log("Failed. Cowardly refusing to run as root.", 0);
         process.exit(1);
     }
 });
@@ -132,7 +133,7 @@ requestStatus = function(callback) {
             callback(status);
         }
         else {
-            console.log("Unknown message received from server. Hanging up.");
+            log("CRITICAL: Unknown message received from server. Hanging up.", 0);
             client.close();
         }
     });
@@ -153,12 +154,6 @@ writeBits = function(bits, buffer, offset) {
     for (var i = 0; i < bits.length && (i + offset) < buffer.length; ++i) {
         buffer.writeUInt8(bits[i], (i + offset));
     }
-};
-
-sendRequest = function(buffer, socket, port, ip) {
-
-    while (response === undefined) {}
-    return response;
 };
 
 payloadReader = function(msg, offset) {
@@ -190,3 +185,8 @@ generatePage = function(data, template, callback) {
     });
 };
 
+log = function(message, level) {
+    if (level > process.env.DEBUG) return;
+
+    console.log(message);
+}
