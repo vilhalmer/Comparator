@@ -12,7 +12,7 @@ Comparator is implemented as a web server. To get started:
 3. Run `sudo node comparator.js` and enjoy!
 
 ## FAQ ##
-Q. How do I get this to play nicely with the rest of my website?
+Q. How do I get this to play nicely with the rest of my website?  
 A. If you're using Apache, you can add a VirtualHost directive like this:
     <VirtualHost *:80>
         ServerName cleverexamplesite.com
@@ -32,8 +32,8 @@ A. If you're using Apache, you can add a VirtualHost directive like this:
 
     …where cleverexamplesite.com is your site, and <Location /status> is the path that you want the status page to exist at. You'll also need to add `NameVirtualHost *:80` somewhere above that to enable it. In comparator.conf, you should configure it with a host of "localhost", port of 3000 (or whatever you want to change it to, just not 80), and path of whatever you chose for the <Location> bit.
 
-Q. Nobody has actually asked any of these, have they?
+Q. Nobody has actually asked any of these, have they?  
 A. Nope, not at all.
 
-Q. Sweet.
-Aaddress. Yep.
+Q. Sweet.  
+A. Yep.
