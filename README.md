@@ -15,6 +15,7 @@ Comparator is implemented as a web server. To get started:
 ## FAQ ##
 Q. How do I get this to play nicely with the rest of my website?  
 A. If you're using Apache, you can add a VirtualHost directive like this:
+
     <VirtualHost *:80>
         ServerName cleverexamplesite.com
                 
