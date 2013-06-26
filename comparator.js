@@ -163,7 +163,7 @@ payloadReader = function(msg, offset) {
     this.next = function() {
         if (this.position >= this.msg.length) return null;
         var i = this.position;
-        while (msg[i] !== 0x00) { ++i; }
+        while (msg[i] !== 0x00) ++i;
         // Note to future me: yes, I skipped adding the null character on purpose. JS doesn't like it.
 
         current = this.position;
@@ -175,7 +175,7 @@ payloadReader = function(msg, offset) {
 
 generatePage = function(data, template, callback) {
     fs.readFile(template, 'utf8', function(err, fileData) {
-        var regex = /%%(.+?)%%/g
+        var regex = /%%(.+?)%%/g;
         var result;
         fileData = fileData.replace(regex, function(match) {
             match = match.substring(2, match.length - 2);
@@ -186,7 +186,7 @@ generatePage = function(data, template, callback) {
 };
 
 log = function(message, level) {
-    var debug = (process.env.DEBUG === undefined) ? 0 : process.env.DEBUG
+    var debug = (process.env.DEBUG === undefined) ? 0 : process.env.DEBUG;
     if (level > debug) return;
 
     console.log(message);
