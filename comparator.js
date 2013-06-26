@@ -186,7 +186,8 @@ generatePage = function(data, template, callback) {
 };
 
 log = function(message, level) {
-    if (level > process.env.DEBUG) return;
+    var debug = (process.env.DEBUG === undefined) ? 0 : process.env.DEBUG
+    if (level > debug) return;
 
     console.log(message);
 }
